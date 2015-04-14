@@ -9,7 +9,7 @@
 
 ]>
 <article lang="en" id="art.xmlvim">
- <title>Editing XML files with the Vim Editor</title>
+ <title>Editing XML/DocBook Files with the &vi; Editor</title>
  <articleinfo>
   <legalnotice>
    <para>
@@ -18,11 +18,158 @@
    </para>
   </legalnotice>
  </articleinfo>
- <abstract>
-  <para></para>
- </abstract>
  <sect1>
-  <title></title>
+  <title>Useful &vi; Settings</title>
+
+  <para>
+   &vi; stores its settings in <filename>~/.vimrc</filename>. Here are the
+   ones that I generally find useful. Note that lines starting with
+   <literal>"</literal> are comments.
+  </para>
+
+  <tip>
+   <para>
+    After you make changes to <filename>.vimrc</filename>, you can apply
+    them without restarting the &vi; session with <command>:source
+    ~/.vimrc</command>
+   </para>
+  </tip>
+
+<screen>" break compatibility with the ancient vi
+set nocompatible
+" set autorecognition of file types
+filetype on
+filetype plugin on
+filetype indent on
+" syntax highlighting, of course
+syntax on
+" smart context sensitive indenting
+set smartindent
+" show the info status bar at the bottom
+set ruler
+" show line numbers
+set number</screen>
+
+  <para>
+   If you use tabs to edit several files at once, it is handy to map the the
+   following shortcuts to switch between them.
+  </para>
+
+<screen>" switch the tabs with SHIFT + &lt; or &gt;
+map &lt;S-Right> :tabnext&lt;CR>
+map &lt;S-Left> :tabprevious&lt;CR></screen>
+ </sect1>
+ <sect1>
+  <title>Moving Around the Tags</title>
+
+  <para>
+   When editing an XML document, it is often useful to move and manipulate
+   the text in the context of the XML tags. For example to erase the text
+   the cursor is currently at, including the surrounding tags. Or to copy
+   the inner text from the tag under cursor.
+  </para>
+
+  <sect2>
+   <title>Text Objects</title>
+   <para>
+    &vi; knows about <emphasis>text objects</emphasis>. A text object is a
+    part of text, such as word, sentence, block (block of text between
+    brackets), or paragraph. You define them by pressing
+    <literal>w</literal>, <literal>s</literal>, <literal>b</literal>, or
+    <literal>p</literal>. &vi; knows about one text object related
+    specifically to markup languages - a tag. A tag corresponds to a pair
+    HTML/XML element.
+   </para>
+   <para>
+    &vi; distinguishes between the inner part of a tag, and the whole tag
+    including the surrounding markup. &vi; can also select a text enclosed
+    in quotes, or jump the cursor between left or right sharp brackets. Get
+    inspired by the following few useful examples:
+   </para>
+   <informaltable>
+    <tgroup cols='3'>
+     <colspec colwidth='1in'/>
+     <colspec colwidth='1.5in'/>
+     <thead>
+      <row>
+       <entry>Command</entry>
+       <entry>How to remember</entry>
+       <entry>Description</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry><command>it</command>
+       </entry>
+       <entry>inner tag</entry>
+       <entry>text places inside XML element</entry>
+      </row>
+      <row>
+       <entry><command>at</command>
+       </entry>
+       <entry>a tag</entry>
+       <entry>same as <command>it</command> + the pair of surrounding tags</entry>
+      </row>
+      <row>
+       <entry><command>2it</command>
+       </entry>
+       <entry>2 x inner tag</entry>
+       <entry>select the inner text of the parent element (including the current tag)</entry>
+      </row>
+      <row>
+       <entry><command>2at</command>
+       </entry>
+       <entry>2 x a tag</entry>
+       <entry>select the whole parent element (including the current and the parent tags)</entry>
+      </row>
+      <row>
+       <entry><command>f></command>
+       </entry>
+       <entry>find ></entry>
+       <entry>select the text to the end of the closing tag, including '>'</entry>
+      </row>
+      <row>
+       <entry><command>t&lt;</command>
+       </entry>
+       <entry>find to ></entry>
+       <entry>select the text to the end of the closing tag, without '&lt;'</entry>
+      </row>
+      <row>
+       <entry><command>F&lt;</command>
+       </entry>
+       <entry>find &lt; backward</entry>
+       <entry>select the text from the beginning of the tag, including '&lt;'</entry>
+      </row>
+      <row>
+       <entry><command>T&lt;</command>
+       </entry>
+       <entry>find to &lt; backward</entry>
+       <entry>select the text from the beginning of the tag, without '&lt;'</entry>
+      </row>
+      <row>
+       <entry><command>a"</command>
+       </entry>
+       <entry>a string</entry>
+       <entry>select the text including the surrounding quotes, such as XML attribute</entry>
+      </row>
+      <row>
+       <entry><command>i"</command>
+       </entry>
+       <entry>a string</entry>
+       <entry>select the text without the surrounding quotes, such as text of an XML attribute</entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </sect2>
+ </sect1>
+ <sect1>
+  <title>xml.vim Plugin</title>
+
+  <para></para>
+ </sect1>
+ <sect1>
+  <title>DTD Support?!?</title>
 
   <para></para>
  </sect1>
