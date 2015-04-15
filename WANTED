@@ -1,0 +1,9 @@
+- possibility to fold/unfold elements (like sections etc.) for better overview
+- possibility to integrate daps-spell (for on-the-fly spellchecking within the editor), 
+  this is, for example, possible in jEdit, see 
+  https://github.com/openSUSE/daps/blob/develop/doc/xml/daps_user_editors.xml
+- "tab completion" for XML elements: type '<' and the editor gives you a list of elements that 
+   (according to the DTD or Schema) can be inserted at that place
+- "tab completion" for entities: type '&' and the editor gives you a list of available 
+  entities that have been defined
+- "tab completion" for xref targets: editor proposes IDs of possible xref tragets within the file 
