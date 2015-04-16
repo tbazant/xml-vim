@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="urn:x-daps:xslt:profiling:docbook45-profile.xsl" 
-                 type="text/xml" title="Profiling step"?>
-<!DOCTYPE article PUBLIC
- "-//OASIS//DTD DocBook XML V4.5//EN"
- "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
-
-  <!ENTITY vi "Vim">
-
+type="text/xml" title="Profiling step"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY vi "Vim">
 ]>
 <article lang="en" id="art.xmlvim">
  <title>Editing XML/DocBook Files with the &vi; Editor</title>
@@ -56,8 +52,8 @@ set number</screen>
   </para>
 
 <screen>" switch the tabs with SHIFT + &lt; or &gt;
-map &lt;S-Right> :tabnext&lt;CR>
-map &lt;S-Left> :tabprevious&lt;CR></screen>
+map &lt;S-Right&gt; :tabnext&lt;CR&gt;
+map &lt;S-Left&gt; :tabprevious&lt;CR&gt;</screen>
  </sect1>
  <sect1>
   <title>Moving Around the Tags</title>
@@ -87,14 +83,14 @@ map &lt;S-Left> :tabprevious&lt;CR></screen>
     inspired by the following few useful examples:
    </para>
    <informaltable>
-    <tgroup cols='3'>
-     <colspec colwidth='1in'/>
-     <colspec colwidth='1.5in'/>
+    <tgroup cols="3">
+     <colspec colwidth="1in"/>
+     <colspec colwidth="1.5in"/>
      <thead>
       <row>
-       <entry>Command</entry>
-       <entry>How to remember</entry>
-       <entry>Description</entry>
+       <entry>command</entry>
+       <entry>how to remember</entry>
+       <entry>description</entry>
       </row>
      </thead>
      <tbody>
@@ -102,7 +98,7 @@ map &lt;S-Left> :tabprevious&lt;CR></screen>
        <entry><command>it</command>
        </entry>
        <entry>inner tag</entry>
-       <entry>text places inside XML element</entry>
+       <entry>text placed inside XML element</entry>
       </row>
       <row>
        <entry><command>at</command>
@@ -123,15 +119,15 @@ map &lt;S-Left> :tabprevious&lt;CR></screen>
        <entry>select the whole parent element (including the current and the parent tags)</entry>
       </row>
       <row>
-       <entry><command>f></command>
+       <entry><command>f&gt;</command>
        </entry>
-       <entry>find ></entry>
-       <entry>select the text to the end of the closing tag, including '>'</entry>
+       <entry>find &gt;</entry>
+       <entry>select the text to the end of the closing tag, including '&gt;'</entry>
       </row>
       <row>
        <entry><command>t&lt;</command>
        </entry>
-       <entry>find to ></entry>
+       <entry>find to &gt;</entry>
        <entry>select the text to the end of the closing tag, without '&lt;'</entry>
       </row>
       <row>
@@ -166,7 +162,349 @@ map &lt;S-Left> :tabprevious&lt;CR></screen>
  <sect1>
   <title>xml.vim Plugin</title>
 
-  <para></para>
+  <para>
+   The <literal>xml.vim</literal> plugin adds extended functionality to
+   editing XML files, such as auto-closing tags, matching the beginning or
+   end of a tag, or folding tags or comments.
+  </para>
+
+  <sect2>
+   <title>Installation</title>
+   <para>
+    To install the <literal>xml.vim</literal> plugin, follow these steps:
+   </para>
+   <procedure>
+    <step>
+     <para>
+      Download latest version of the <literal>xml.vim</literal> plugin from
+      <ulink url="https://github.com/vim-scripts/xml.vim"/>.
+     </para>
+    </step>
+    <step>
+     <para>
+      Unzip the file to the <filename>~/.vim/ftplugin/</filename> directory.
+     </para>
+    </step>
+    <step>
+     <para>
+      Because &vi; uses other default XML features we want to use, edit
+      <filename>~/.vim/ftplugin/xml.vim</filename> and comment
+      (<literal>"</literal>) the line
+     </para>
+<screen>b:did_ftplugin = 1</screen>
+    </step>
+    <step>
+     <para>
+      Restart &vi;. Now you can access the plugin's help by entering
+     </para>
+<screen>:help xml-plugin</screen>
+    </step>
+   </procedure>
+  </sect2>
+
+  <sect2>
+   <title>Added Value</title>
+   <para>
+    The following tables show goodies of <literal>xml.vm</literal>. Notice
+    that '|' stands for the current cursor position.
+   </para>
+   <sect3>
+    <title>Enhancements for the Insert Mode</title>
+    <informaltable>
+     <tgroup cols="4">
+      <colspec colwidth=".8in"/>
+      <colspec colwidth=".8in"/>
+      <colspec colwidth="1.2in"/>
+      <thead>
+       <row>
+        <entry>mapping</entry>
+        <entry>when</entry>
+        <entry>result</entry>
+        <entry>description</entry>
+       </row>
+      </thead>
+      <tbody>
+       <row>
+        <entry>
+<screen>&gt;</screen>
+        </entry>
+        <entry>
+<screen>&lt;para|</screen>
+        </entry>
+        <entry>
+<screen>&lt;para&gt;|&lt;/para&gt;</screen>
+        </entry>
+        <entry>closes the current tag and puts the cursor between the
+         opening and ending tag</entry>
+       </row>
+       <row>
+        <entry>
+<screen>&gt;&gt;</screen>
+        </entry>
+        <entry>
+<screen>&lt;para|</screen>
+        </entry>
+        <entry>
+<screen>&lt;para&gt;
+    |
+&lt;/para&gt;</screen>
+        </entry>
+        <entry>closes the current tag, inserts newline between the tags,
+         and puts the cursor on the blank line</entry>
+       </row>
+       <row>
+        <entry>
+<screen>;;</screen>
+        </entry>
+        <entry>
+<screen>para|</screen>
+        </entry>
+        <entry>
+<screen>&lt;para&gt;|&lt;/para&gt;</screen>
+        </entry>
+        <entry>makes a pair of tags out of the preceding word,
+         and puts the cursor between them</entry>
+       </row>
+       <row>
+        <entry>
+<screen>;;</screen>
+        </entry>
+        <entry>
+<screen>
+para|
+</screen>
+        </entry>
+        <entry>
+<screen>&lt;para&gt;
+    |
+&lt;/para&gt;</screen>
+        </entry>
+        <entry>when the word is on its own line, makes a pair of tags out
+         of the preceding word, inserts newline between the tags,
+         and puts the cursor on the blank line</entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </informaltable>
+   </sect3>
+   <sect3>
+    <title>'[' and ']' Mappings for the Command Mode</title>
+    <tip>
+     <para>
+      Some of the following mappings use &lt;localleader&gt; key before the
+      mapping itself. It is backslash '<literal>\</literal>' by default. You
+      can, however, change it to any other key in your
+      <filename>~/.vimrc</filename> file. For example to change it to a
+      comma '<literal>,</literal>', insert the following line
+     </para>
+<screen>let maplocalleader = ","</screen>
+     <para>
+      and run <command>:source ~/.vimrc</command> to make it effective.
+     </para>
+     <para>
+      From now on, I assume you have re-mapped the &lt;localleader&gt; to a
+      comma character <literal>,</literal> :-)
+     </para>
+    </tip>
+    <informaltable>
+     <tgroup cols="4">
+      <colspec colname='c1' colwidth='.5in'/>
+      <colspec colname='c2'/>
+      <colspec colname='c3'/>
+      <colspec colname='c4'/>
+      <thead>
+       <row>
+        <entry>mapping</entry>
+        <entry>when</entry>
+        <entry>result</entry>
+        <entry>description</entry>
+       </row>
+      </thead>
+      <tbody>
+       <row>
+        <entry>
+<screen>,]</screen>
+        </entry>
+        <entry>&lt;!-- some commented | text --&gt;</entry>
+        <entry>the same text no longer commented|</entry>
+        <entry>removes &lt;!-- --&gt; delimiters and puts the cursor at the end of the text</entry>
+       </row>
+       <row>
+        <entry>
+<screen>,}</screen>
+        </entry>
+        <entry>&lt;!-- some commented | text --&gt;</entry>
+        <entry>|</entry>
+        <entry>removes the whole &lt;!-- --&gt; section</entry>
+       </row>
+       <row>
+        <entry>
+<screen>[[</screen>
+        </entry>
+        <entry namest="c2" nameend="c4" align="center">go to the previous opening tag</entry>
+       </row>
+       <row>
+        <entry>
+<screen>]]</screen>
+        </entry>
+        <entry namest="c2" nameend="c4" align="center">go to the next opening tag</entry>
+       </row>
+       <row>
+        <entry>
+<screen>[]</screen>
+        </entry>
+        <entry namest="c2" nameend="c4" align="center">go to the previous closing tag</entry>
+       </row>
+       <row>
+        <entry>
+<screen>][</screen>
+        </entry>
+        <entry namest="c2" nameend="c4" align="center">go to the next closing tag</entry>
+       </row>
+       <row>
+        <entry>
+<screen>["</screen>
+        </entry>
+        <entry namest="c2" nameend="c4" align="center">go to the next comment</entry>
+       </row>
+       <row>
+        <entry>
+<screen>]"</screen>
+        </entry>
+        <entry namest="c2" nameend="c4" align="center">go to the previous comment</entry>
+       </row>
+       <row>
+        <entry>
+<screen>,5</screen> or <screen>,%</screen>
+        </entry>
+        <entry namest="c2" nameend="c4" align="center">jump to the beginning of the matching opening/closing tag</entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </informaltable>
+   </sect3>
+   <sect3>
+    <title>Advanced Editing Techniques</title>
+    <informaltable>
+     <tgroup cols="4">
+      <colspec colname='c1' colwidth='.5in'/>
+      <colspec colname='c2'/>
+      <colspec colname='c3'/>
+      <colspec colname='c4'/>
+      <thead>
+       <row>
+        <entry>mapping</entry>
+        <entry>when</entry>
+        <entry>result</entry>
+        <entry>description</entry>
+       </row>
+      </thead>
+      <tbody>
+       <row>
+        <entry>
+<screen>,c</screen>
+        </entry>
+        <entry namest="c2" nameend="c4" align="center">rename a tag</entry>
+       </row>
+       <row>
+        <entry>
+<screen>,C</screen>
+        </entry>
+        <entry namest="c2" nameend="c4" align="center">rename a tag and ask for its attributes</entry>
+       </row>
+       <row>
+        <entry>
+<screen>,d</screen>
+        </entry>
+        <entry>&lt;pa|ra&gt;outer &lt;emphasis&gt;inner&lt;/emphasis&gt; outer&lt;para&gt;</entry>
+        <entry>otter &lt;emphasis&gt;inner&lt;/emphasis&gt; outer</entry>
+        <entry>removes the surrounding tag</entry>
+       </row>
+       <row>
+        <entry>
+<screen>,D</screen>
+        </entry>
+        <entry>&lt;para&gt;otter &lt;em|phasis&gt;inner&lt;/emphasis&gt; outer&lt;para&gt;</entry>
+        <entry>&lt;para&gt;outer outer&lt;para&gt;</entry>
+        <entry>removes the surrounding tag and its content</entry>
+       </row>
+       <row>
+        <entry>
+<screen>,e</screen>
+        </entry>
+        <entry>&lt;para&gt;some text|</entry>
+        <entry>&lt;para&gt;some text&lt;para&gt;</entry>
+        <entry>provides a closing tag for the preceding unclosed opening tag</entry>
+       </row>
+       <row>
+        <entry>
+<screen>,f</screen>
+        </entry>
+        <entry>
+<screen>&lt;pa|ra&gt;
+ line1
+ line2
+ line3
+ &lt;/para&gt;</screen>
+        </entry>
+        <entry>+-- 5 lines: &lt;para&gt;---------- </entry>
+        <entry>fold the tag under the cursor</entry>
+       </row>
+       <row>
+        <entry>
+<screen>,F</screen>
+        </entry>
+        <entry namest="c2" nameend="c4" align="center">folds all tags named as the one under the cursor; if there 
+        is no tag under the cursor, you will be asked for the tag name</entry>
+       </row>
+       <row>
+        <entry>
+<screen>,j</screen>
+        </entry>
+        <entry>
+<screen>&lt;para&gt;para1&lt;/p|ara&gt;
+&lt;para&gt;para2&lt;/para&gt;</screen>
+        </entry>
+        <entry>
+<screen>&lt;para&gt;para1|
+para2&lt;/para&gt;</screen>
+        </entry>
+        <entry>joins two adjacent elements of the same type, joining and removing the tag under the cursor</entry>
+       </row>
+       <row>
+        <entry>
+<screen>,l</screen>
+        </entry>
+        <entry>
+<screen>text</screen>
+        </entry>
+        <entry>
+<screen>&lt;listitem&gt;
+ &lt;para&gt;text&lt;/para&gt;
+&lt;listitem&gt;</screen>
+        </entry>
+        <entry>surrounds a visually defined (with <literal>v</literal>) block with &lt;listitem&gt;&lt;para&gt;</entry>
+       </row>
+       <row>
+        <entry>
+<screen>,o</screen>
+        </entry>
+        <entry>
+<screen>&lt;pa|ra&gt;text&lt;/para&gt;</screen>
+        </entry>
+        <entry>
+<screen>&lt;para&gt;
+&lt;entry&gt;text&lt;/entry&gt;
+&lt;/para&gt;</screen>
+        </entry>
+        <entry>Surround the inner text of the current tag with a specified one which you are asked for,
+         &lt;entry/&gt; in the example</entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </informaltable>
+   </sect3>
+  </sect2>
  </sect1>
  <sect1>
   <title>DTD Support?!?</title>
