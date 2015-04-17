@@ -646,6 +646,16 @@ para2&lt;/para&gt;</screen>
    </step>
    <step>
     <para>
+     Edit <filename>docbook5.dtd</filename>, search for the line with
+    </para>
+    <screen>let g:xmldata_xxx</screen>
+    <para>
+     and replace it with
+    </para>
+    <screen>let g:xmldata_docbook5</screen>
+   </step>
+   <step>
+    <para>
      Restart &vi; and open some DocBook file. To tell &vi; to use the
      previously converted <filename>docbook5.dtd</filename> file, set
      <command>:XMLns docbook5</command> from within the &vi; command mode.
