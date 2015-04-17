@@ -122,37 +122,37 @@ map &lt;S-Left&gt; :tabprevious&lt;CR&gt;</screen>
        <entry><command>f&gt;</command>
        </entry>
        <entry>find &gt;</entry>
-       <entry>select the text to the end of the closing tag, including '&gt;'</entry>
+       <entry>selects the text to the end of the closing tag, including '&gt;'</entry>
       </row>
       <row>
        <entry><command>t&lt;</command>
        </entry>
        <entry>find to &gt;</entry>
-       <entry>select the text to the end of the closing tag, without '&lt;'</entry>
+       <entry>selects the text to the end of the closing tag, without '&lt;'</entry>
       </row>
       <row>
        <entry><command>F&lt;</command>
        </entry>
        <entry>find &lt; backward</entry>
-       <entry>select the text from the beginning of the tag, including '&lt;'</entry>
+       <entry>selects the text from the beginning of the tag, including '&lt;'</entry>
       </row>
       <row>
        <entry><command>T&lt;</command>
        </entry>
        <entry>find to &lt; backward</entry>
-       <entry>select the text from the beginning of the tag, without '&lt;'</entry>
+       <entry>selects the text from the beginning of the tag, without '&lt;'</entry>
       </row>
       <row>
        <entry><command>a"</command>
        </entry>
        <entry>a string</entry>
-       <entry>select the text including the surrounding quotes, such as XML attribute</entry>
+       <entry>selects the text including the surrounding quotes, such as XML attribute</entry>
       </row>
       <row>
        <entry><command>i"</command>
        </entry>
        <entry>a string</entry>
-       <entry>select the text without the surrounding quotes, such as text of an XML attribute</entry>
+       <entry>selects the text without the surrounding quotes, such as text of an XML attribute</entry>
       </row>
      </tbody>
     </tgroup>
@@ -325,7 +325,9 @@ para|
         <entry>
 <screen>,]</screen>
         </entry>
-        <entry>&lt;!-- some commented | text --&gt;</entry>
+        <entry>
+<screen>&lt;!-- some commented | text --&gt;</screen>
+        </entry>
         <entry>the same text no longer commented|</entry>
         <entry>removes &lt;!-- --&gt; delimiters and puts the cursor at the end of the text</entry>
        </row>
@@ -333,7 +335,9 @@ para|
         <entry>
 <screen>,}</screen>
         </entry>
-        <entry>&lt;!-- some commented | text --&gt;</entry>
+        <entry>
+<screen>&lt;!-- some commented | text --&gt;</screen>
+        </entry>
         <entry>|</entry>
         <entry>removes the whole &lt;!-- --&gt; section</entry>
        </row>
@@ -417,7 +421,7 @@ para|
 <screen>,d</screen>
         </entry>
         <entry>&lt;pa|ra&gt;outer &lt;emphasis&gt;inner&lt;/emphasis&gt; outer&lt;para&gt;</entry>
-        <entry>otter &lt;emphasis&gt;inner&lt;/emphasis&gt; outer</entry>
+        <entry>outer &lt;emphasis&gt;inner&lt;/emphasis&gt; outer</entry>
         <entry>removes the surrounding tag</entry>
        </row>
        <row>
@@ -432,9 +436,25 @@ para|
         <entry>
 <screen>,e</screen>
         </entry>
-        <entry>&lt;para&gt;some text|</entry>
-        <entry>&lt;para&gt;some text&lt;para&gt;</entry>
+        <entry>
+<screen>&lt;para&gt;some text|</screen>
+        </entry>
+        <entry>
+<screen>&lt;para&gt;some text&lt;para&gt;</screen>
+        </entry>
         <entry>provides a closing tag for the preceding unclosed opening tag</entry>
+       </row>
+       <row>
+        <entry>
+<screen>,s</screen>
+        </entry>
+        <entry>
+<screen>|some text&lt;/para&gt;</screen>
+        </entry>
+        <entry>
+<screen>&lt;para&gt;some text&lt;para&gt;</screen>
+        </entry>
+        <entry>provides an opening tag for the following unopened closing tag</entry>
        </row>
        <row>
         <entry>
@@ -447,8 +467,10 @@ para|
  line3
  &lt;/para&gt;</screen>
         </entry>
-        <entry>+-- 5 lines: &lt;para&gt;---------- </entry>
-        <entry>fold the tag under the cursor</entry>
+        <entry>
+<screen>+-- 5 lines: &lt;para&gt;---------- </screen>
+        </entry>
+        <entry>folds the tag under the cursor</entry>
        </row>
        <row>
         <entry>
@@ -497,8 +519,64 @@ para2&lt;/para&gt;</screen>
 &lt;entry&gt;text&lt;/entry&gt;
 &lt;/para&gt;</screen>
         </entry>
-        <entry>Surround the inner text of the current tag with a specified one which you are asked for,
+        <entry>surround the inner text of the current tag with a specified one which you are asked for,
          &lt;entry/&gt; in the example</entry>
+       </row>
+       <row>
+        <entry>
+<screen>,O</screen>
+        </entry>
+        <entry>
+<screen>&lt;pa|ra&gt;text&lt;/para&gt;</screen>
+        </entry>
+        <entry>
+<screen>&lt;entry&gt;
+ &lt;para&gt;text&lt;/para&gt;
+&lt;/entry&gt;</screen>
+        </entry>
+        <entry>surrounds the tag under the cursor with a specified one which you are asked for,
+         &lt;entry/&gt; in the example</entry>
+       </row>
+       <row>
+        <entry>
+<screen>,&gt;</screen>
+        </entry>
+        <entry namest="c2" nameend="c4" align="center">indents the current element and all its content</entry>
+       </row>
+       <row>
+        <entry>
+<screen>,&lt;</screen>
+        </entry>
+        <entry namest="c2" nameend="c4" align="center">unindents the current element and all its content</entry>
+       </row>
+       <row>
+        <entry>
+<screen>,&lt;</screen>
+        </entry>
+        <entry>some text|</entry>
+        <entry>&lt;!-- some text --&gt;</entry>
+        <entry>comments out visually selected text block</entry>
+       </row>
+       <row>
+        <entry>
+<screen>,v</screen>
+        </entry>
+        <entry>
+<screen>some text</screen>
+        </entry>
+        <entry>
+<screen>&lt;para&gt;
+ some text
+&lt;/para&gt;</screen>
+        </entry>
+        <entry>surrounds the visually selected text block  with a tag which you are asked for,
+         &lt;para/&gt; in the example</entry>
+       </row>
+       <row>
+        <entry>
+<screen>,5</screen> or <screen>,%</screen>
+        </entry>
+        <entry namest="c2" nameend="c4" align="center">extends the visual selection up to the matching tag</entry>
        </row>
       </tbody>
      </tgroup>
@@ -512,3 +590,7 @@ para2&lt;/para&gt;</screen>
   <para></para>
  </sect1>
 </article>
+<!-- TODO
+* investigate http://www.vim.org/scripts/script.php?script_id=1442
+* continue on xml-plugin.txt
+-->
