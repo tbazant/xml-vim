@@ -47,6 +47,15 @@ set ruler
 set number</screen>
 
   <para>
+   Turn on default capabilities for XML and DocBook file types.
+  </para>
+
+<screen>
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+autocmd FileType docbk set omnifunc=xmlcomplete#CompleteTags
+</screen>
+
+  <para>
    If you use tabs to edit several files at once, it is handy to map the the
    following shortcuts to switch between them.
   </para>
@@ -428,8 +437,16 @@ para|
         <entry>
 <screen>,D</screen>
         </entry>
-        <entry>&lt;para&gt;otter &lt;em|phasis&gt;inner&lt;/emphasis&gt; outer&lt;para&gt;</entry>
-        <entry>&lt;para&gt;outer outer&lt;para&gt;</entry>
+        <entry>
+<screen>&lt;para&gt;outer
+&lt;em|phasis&gt;inner&lt;/emphasis&gt;
+outer&lt;para&gt;</screen>
+        </entry>
+        <entry>
+<screen>&lt;para&gt;
+outer outer
+&lt;para&gt;</screen>
+        </entry>
         <entry>removes the surrounding tag and its content</entry>
        </row>
        <row>
@@ -585,12 +602,84 @@ para2&lt;/para&gt;</screen>
   </sect2>
  </sect1>
  <sect1>
-  <title>DTD Support?!?</title>
+  <title>DTD Support</title>
 
-  <para></para>
+  <para>
+   In general, &vi; is not a DTD aware editor. Still you can persuade it to
+   autocomplete tags based on the supplied DTD. As of now, the
+   autocompletion is not fully context sensitive, which means that &vi;
+   offers you <emphasis>any</emphasis> of the child tags available in the
+   current position in the text.
+  </para>
+
+  <procedure>
+   <step>
+    <para>
+     Download the
+     <ulink url="http://search.cpan.org/CPAN/authors/id/E/EH/EHOOD/perlSGML.1997Sep18.tar.gz">perlSGML</ulink>
+     package, <command>unzip</command> it, <command>cd</command> to the
+     unpacked directory (<filename>perlSGML.1997Sep18/</filename>, run
+     <command>perl install.me</command>, and answer to the questions.
+    </para>
+   </step>
+   <step>
+    <para>
+     Download the DTD file you want to use with &vi;. For example, DocBook5
+     DTD can be found at
+     <ulink url="http://docbook.org/xml/5.0/dtd/docbook.dtd"/>.
+    </para>
+   </step>
+   <step>
+    <para>
+     Download
+     <ulink url="http://www.vim.org/scripts/download_script.php?src_id=5612">dtd2vim</ulink>
+     and run <command>perl dtd2vim docbook.dtd</command>. The script creates
+     the <filename>docbook.dtd</filename> file.
+    </para>
+   </step>
+   <step>
+    <para>
+     Rename the <filename>docbook.dtd</filename> to
+     <filename>docbook5.dtd</filename> and move it to
+     <filename>~/.vim/autoload/docbook5.dtd</filename>.
+    </para>
+   </step>
+   <step>
+    <para>
+     Restart &vi; and open some DocBook file. To tell &vi; to use the
+     previously converted <filename>docbook5.dtd</filename> file, set
+     <command>:XMLns docbook5</command> from within the &vi; command mode.
+    </para>
+   </step>
+   <step>
+    <para>
+     To have &vi; autocomplete the tag for you, start typing it with the
+     opening sharp bracket <literal>&lt;</literal> - you can optionally add
+     a few initial characters to make the suggestion list smaller - and then
+     press the default omni-completion shortcut
+     <menuchoice><guimenu>CTRL</guimenu><guimenu>x</guimenu>
+     <guimenu>CTRL</guimenu><guimenu>o</guimenu></menuchoice>. &vi; offers
+     you a list of possible choices. Select one and pres
+     <literal>&gt;</literal> to finish the tag.
+    </para>
+    <tip>
+     <para>
+      Because <menuchoice><guimenu>CTRL</guimenu><guimenu>x</guimenu>
+      <guimenu>CTRL</guimenu><guimenu>o</guimenu></menuchoice> is awkward, I
+      suggest you to remap it in your <filename>~/.vimrc</filename> to for
+      example
+      <menuchoice><guimenu>CTRL</guimenu><guimenu>SPACE</guimenu></menuchoice>
+      adding the following lines for XML and DocBook file types:
+     </para>
+<screen>
+autocmd FileType xml imap &lt;C-@&gt; &lt;C-X&gt;&lt;C-O&gt;
+autocmd FileType docbk imap &lt;C-@&gt; &lt;C-X&gt;&lt;C-O&gt;
+  </screen>
+     <para>
+      Then restart &vi; and enjoy your wild editing experience :-)
+     </para>
+    </tip>
+   </step>
+  </procedure>
  </sect1>
 </article>
-<!-- TODO
-* investigate http://www.vim.org/scripts/script.php?script_id=1442
-* continue on xml-plugin.txt
--->
