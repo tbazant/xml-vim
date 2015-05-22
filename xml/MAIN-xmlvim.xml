@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="urn:x-daps:xslt:profiling:docbook45-profile.xsl" 
-type="text/xml" title="Profiling step"?>
+<?xml-stylesheet href="urn:x-daps:xslt:profiling:docbook45-profile.xsl" type="text/xml" title="Profiling step"?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
 <!ENTITY vi "Vim">
 ]>
 <article lang="en" id="art.xmlvim">
- <title>Editing XML/DocBook Files with the &vi; Editor</title>
+ <title>Editing XML/DocBook Files with &vi;</title>
  <articleinfo>
   <legalnotice>
    <para>
@@ -112,7 +111,7 @@ map &lt;S-Left&gt; :tabprevious&lt;CR&gt;</screen>
       <row>
        <entry><command>at</command>
        </entry>
-       <entry>a tag</entry>
+       <entry>all tag</entry>
        <entry>same as <command>it</command> + the pair of surrounding tags</entry>
       </row>
       <row>
@@ -124,7 +123,7 @@ map &lt;S-Left&gt; :tabprevious&lt;CR&gt;</screen>
       <row>
        <entry><command>2at</command>
        </entry>
-       <entry>2 x a tag</entry>
+       <entry>2 x all tag</entry>
        <entry>select the whole parent element (including the current and the parent tags)</entry>
       </row>
       <row>
@@ -681,50 +680,102 @@ autocmd FileType docbk imap &lt;C-@&gt; &lt;C-X&gt;&lt;C-O&gt;
   </procedure>
  </sect1>
  <sect1>
-  <title>Additional Goodies</title>
+  <title>Auto-completing XML Entities</title>
 
   <para>
-   This section introduces bonus stuff that can make your XML life with &vi;
-   even easier.
+   If your XML entities are included in the file you are just editing, &vi;
+   can auto-complete their names for you - just write the
+   initial<literal>&amp;</literal> and press the omni-completion shortcut
+   (<menuchoice><guimenu>CTRL</guimenu><guimenu>SPACE</guimenu></menuchoice>
+   if you followed me recently).
   </para>
 
-  <sect2>
-   <title>Auto-completing XML Entites</title>
-   <para>
-    If your XML entities are included in the file you are just editing, &vi;
-    can auto-complete their names for you - just write the
-    initial<literal>&amp;</literal> and press the omni-completion shortcut
-    (<menuchoice><guimenu>CTRL</guimenu><guimenu>SPACE</guimenu></menuchoice>
-    if you followed me recently).
-   </para>
-   <para>
-    If XML entities are included from other file, &vi; cannot see it. You
-    have to convert the entity file into <literal>.vim</literal> format and
-    include it into the <literal>vimxmlentities</literal> option in the
-    current &vi; DTD file, such as
-    <filename>~/.vim/autoload/xml/docbook5.vim</filename>.
-   </para>
-   <para>
-    To ease this process, I included the
-    <command>update_docbook_entities.pl</command> script. It takes your
-    custom entity file as a first argument, and the DTD .vim file as a
-    second argument. It extracts found entities, converts them into &vi;
-    understandable format, and adds them into the custom DTD file, such as
-    <filename>docbook5.vim</filename>.
-   </para>
-   <para>
-    To add a shortcut to this script to &vi;, add (and customized) this line
-    to your <filename>.vimrc</filename> file:
-   </para>
+  <para>
+   If XML entities are included from other file, &vi; cannot see it. You
+   have to convert the entity file into <literal>.vim</literal> format and
+   include it into the <literal>vimxmlentities</literal> option in the
+   current &vi; DTD file, such as
+   <filename>~/.vim/autoload/xml/docbook5.vim</filename>.
+  </para>
+
+  <para>
+   To ease this process, I included the
+   <command>update_docbook_entities.pl</command> script. It takes your
+   custom entity file as a first argument, and the DTD .vim file as a second
+   argument. It extracts found entities, converts them into &vi;
+   understandable format, and adds them into the custom DTD file, such as
+   <filename>docbook5.vim</filename>.
+  </para>
+
+  <para>
+   To add a shortcut to this script to &vi;, add (and customized) this line
+   to your <filename>.vimrc</filename> file:
+  </para>
+
 <screen>nnoremap &lt;silent> _e :!update_docbook_entities.pl xml/entity-decl.ent ~/.vim/autoload/xml/docbook5.vim&lt;CR>&lt;CR></screen>
+
+  <para>
+   This line ensures&mdash;assuming that you moved
+   <command>update_docbook_entities.pl</command> to $PATH&mdash;that after
+   pressing _e, the entities found in the
+   <filename>xml/entity-decl.ent</filename> file will be added to
+   <filename>~/.vim/autoload/xml/docbook5.vim</filename>.
+  </para>
+ </sect1>
+ <sect1>
+  <title>On-the-fly Spell-Checking</title>
+
+  <para>
+   &vi; has a built-in spell checker since version 7. To activate it on the
+   current file, enter
+  </para>
+
+<screen>:set spell spelllang=en</screen>
+
+  <para>
+   on the &vi; command line, or put it in your <filename>.vimrc</filename>
+   file:
+  </para>
+
+<screen>
+autocmd FileType xml set spell spelllang=en
+autocmd FileType docbk set spell spelllang=en
+</screen>
+
+  <sect2>
+   <title>Highlight Content instead of Markup</title>
    <para>
-    This line ensures that&mdash;assuming that you moved
-    <command>update_docbook_entities.pl</command> to $PATH&mdash;after
-    pressing
-    <menuchoice><guimenu>_</guimenu><guimenu>e</guimenu></menuchoice>, the
-    entities found in the <filename>xml/entity-decl.ent</filename> file will
-    be added to <filename>~/.vim/autoload/xml/docbook5.vim</filename>.
+    The problem is that it highlights misspelled words included in XML tags
+    instead of their content. To make &vi; highlight spelling errors in the
+    text, enter
    </para>
+<screen>:syntax spell toplevel</screen>
+   <para>
+    To make <command>:syntax spell toplevel</command> start automatically at
+    &vi; start, create the <filename>~/.vim/after/syntax/xml.vim</filename>
+    file and add the following line:
+   </para>
+<screen>syntax spell toplevel</screen>
   </sect2>
+
+  <sect2>
+   <title>Change Highlighting Style</title>
+   <para>
+    By default, &vi; uses the whole cursor block to mark misspelled words.
+    To make it underline them only, and color them with red, enter
+   </para>
+<screen>:highlight SpellBad cterm=underline ctermfg=red</screen>
+  </sect2>
+
+  <sect2>
+   <title>Import Foreign Vocabulary</title>
+   <para></para>
+  </sect2>
+ </sect1>
+ <sect1>
+  <title>DocBook Markup Macros</title>
+  <para>
+   
+  </para>
  </sect1>
 </article>
