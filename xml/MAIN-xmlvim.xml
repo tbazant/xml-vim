@@ -798,7 +798,7 @@ autocmd FileType docbk set spell spelllang=en
      <para>
       Specify the new dictionary for use with &vi;.
      </para>
-<screen>:set spellfile=~/.vim/spell/suse.utf-8.add</screen>.
+<screen>:set spellfile=~/.vim/spell/suse.utf-8.add</screen>
     </step>
    </procedure>
   </sect2>
