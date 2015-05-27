@@ -49,10 +49,7 @@ set number</screen>
    Turn on default capabilities for XML and DocBook file types.
   </para>
 
-<screen>
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType docbk set omnifunc=xmlcomplete#CompleteTags
-</screen>
+<screen>autocmd FileType xml,docbk set omnifunc=xmlcomplete#CompleteTags</screen>
 
   <para>
    If you use tabs to edit several files at once, it is handy to map the the
@@ -668,10 +665,7 @@ para2&lt;/para&gt;</screen>
       <menuchoice><guimenu>CTRL</guimenu><guimenu>SPACE</guimenu></menuchoice>
       adding the following lines for XML and DocBook file types:
      </para>
-<screen>
-autocmd FileType xml imap &lt;C-@&gt; &lt;C-X&gt;&lt;C-O&gt;
-autocmd FileType docbk imap &lt;C-@&gt; &lt;C-X&gt;&lt;C-O&gt;
-  </screen>
+<screen>autocmd FileType xml,docbk imap &lt;C-@&gt; &lt;C-X&gt;&lt;C-O&gt;</screen>
      <para>
       Then restart &vi; and enjoy your wild editing experience :-)
      </para>
@@ -737,10 +731,7 @@ autocmd FileType docbk imap &lt;C-@&gt; &lt;C-X&gt;&lt;C-O&gt;
    file:
   </para>
 
-<screen>
-autocmd FileType xml set spell spelllang=en
-autocmd FileType docbk set spell spelllang=en
-</screen>
+<screen>autocmd FileType xml,docbk set spell spelllang=en</screen>
 
   <sect2>
    <title>Highlight Content, Not the Markup</title>
@@ -759,7 +750,7 @@ autocmd FileType docbk set spell spelllang=en
   </sect2>
 
   <sect2>
-   <title>Change Highlighting Style and Colors</title>
+   <title>Highlighting Style and Colors</title>
    <para>
     By default, &vi; uses the whole cursor block to mark misspelled words.
     To make it underline them only, and color them with red, enter
