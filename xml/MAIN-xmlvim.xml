@@ -743,7 +743,7 @@ autocmd FileType docbk set spell spelllang=en
 </screen>
 
   <sect2>
-   <title>Highlight Content instead of Markup</title>
+   <title>Highlight Content, Not the Markup</title>
    <para>
     The problem is that it highlights misspelled words included in XML tags
     instead of their content. To make &vi; highlight spelling errors in the
@@ -759,23 +759,53 @@ autocmd FileType docbk set spell spelllang=en
   </sect2>
 
   <sect2>
-   <title>Change Highlighting Style</title>
+   <title>Change Highlighting Style and Colors</title>
    <para>
     By default, &vi; uses the whole cursor block to mark misspelled words.
     To make it underline them only, and color them with red, enter
    </para>
-<screen>:highlight SpellBad cterm=underline ctermfg=red</screen>
+<screen>:highlight SpellBad cterm=underline ctermfg=red ctermbg=none</screen>
   </sect2>
 
   <sect2>
    <title>Import Foreign Vocabulary</title>
-   <para></para>
+   <para>
+    &vi; uses its own language related spell checker dictionary. This
+    section helps you use your own custom dictionary (originally an Aspell
+    format) and turn it into &vi; spelling wordlist.
+   </para>
+   <procedure>
+    <step>
+     <para>
+      Get a custom list of words, each word on a separate line. For Aspell
+      dictionary <filename>suse_aspell.rws</filename> residing in the
+      <filename>/usr/share/daps/lib</filename> directory, use the following
+      command:
+     </para>
+<screen>aspell dump master -l suse_aspell.rws --dict-dir=/usr/share/daps/lib > ~/.vim/spell/suse.utf-8.add</screen>
+     <para>
+      The wordlist will be saved to
+      <filename>.vim/spell/suse.utf-8.add</filename> in your home directory.
+     </para>
+    </step>
+    <step>
+     <para>
+      Convert the new wordlist into the &vi; compatible format.
+     </para>
+<screen>:mkspell! ~/.vim/spell/suse.utf-8.add</screen>
+    </step>
+    <step>
+     <para>
+      Specify the new dictionary for use with &vi;.
+     </para>
+<screen>:set spellfile=~/.vim/spell/suse.utf-8.add</screen>.
+    </step>
+   </procedure>
   </sect2>
  </sect1>
  <sect1>
   <title>DocBook Markup Macros</title>
-  <para>
-   
-  </para>
+
+  <para></para>
  </sect1>
 </article>
