@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>DTD Support</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><style type="text/css">
+body { background-image: url('static/images/draft.png');
+       background-repeat: no-repeat;
+       background-position: top left;
+       /* The following properties make the watermark "fixed" on the page. */
+       /* I think that's just a bit too distracting for the reader... */
+       /* background-attachment: fixed; */
+       /* background-position: center center; */
+     }</style><link rel="home" href="index.html" title="Editing XML/DocBook Files with Vim" /><link rel="up" href="index.html" title="Editing XML/DocBook Files with Vim" /><link rel="prev" href="ar01s03.html" title="xml.vim Plugin" /><link rel="next" href="ar01s05.html" title="Auto-completing XML Entities" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">DTD Support</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s03.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s05.html">Next</a></td></tr></table><hr /></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id1332"></a>DTD Support</h2></div></div></div><p>
+   Vim can help you autocomplete tags based on the supplied DTD. First you
+   have to obtain the DTD definition file for the XML subset (such as
+   DocBook) you want to use, the convert it to Vim compatible format, and
+   the let Vim know which file to load.
+  </p><div class="procedure"><ol class="procedure" type="1"><li class="step"><p>
+     Download the
+     <a class="ulink" href="http://search.cpan.org/CPAN/authors/id/E/EH/EHOOD/perlSGML.1997Sep18.tar.gz" target="_top">perlSGML</a>
+     package, <span class="command"><strong>unzip</strong></span> it, <span class="command"><strong>cd</strong></span> to the
+     unpacked directory (<code class="filename">perlSGML.1997Sep18/</code>, run
+     <span class="command"><strong>perl install.me</strong></span>, and answer to the questions.
+    </p></li><li class="step"><p>
+     Download the DTD file you want to use with Vim. For example, DocBook5
+     DTD can be found at
+     <a class="ulink" href="http://docbook.org/xml/5.0/dtd/docbook.dtd" target="_top">http://docbook.org/xml/5.0/dtd/docbook.dtd</a>.
+    </p></li><li class="step"><p>
+     Download
+     <a class="ulink" href="http://www.vim.org/scripts/download_script.php?src_id=5612" target="_top">dtd2vim</a>
+     and run <span class="command"><strong>perl dtd2vim docbook.dtd docbook5</strong></span>. The
+     script creates the <code class="filename">docbook5.vim</code> file.
+    </p></li><li class="step"><p>
+     Move <code class="filename">docbook5.vim</code> to
+     <code class="filename">~/.vim/autoload/xml/docbook5.vim</code>.
+    </p></li><li class="step"><p>
+     Restart Vim and open some DocBook file. To tell Vim to use the
+     previously converted <code class="filename">docbook5.vim</code> file, set
+     <span class="command"><strong>:XMLns docbook5</strong></span> from within the Vim command mode.
+    </p></li><li class="step"><p>
+     To have Vim autocomplete the tag for you, start typing it with the
+     opening sharp bracket <code class="literal">&lt;</code> - you can optionally add
+     a few initial characters to make the suggestion list smaller - and then
+     press the default omni-completion shortcut
+     <span class="guimenu">CTRL</span>+<span class="guimenu">x</span>+<span class="guimenu">CTRL</span>+<span class="guimenu">o</span>. Vim offers
+     you a list of possible choices. Select one and press
+     <code class="literal">&gt;</code> to finish the tag.
+    </p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Tip</h3><p>
+      Because <span class="guimenu">CTRL</span>+<span class="guimenu">x</span>+<span class="guimenu">CTRL</span>+<span class="guimenu">o</span> is awkward, I
+      suggest you to remap it in your <code class="filename">~/.vimrc</code> to for
+      example
+      <span class="guimenu">CTRL</span>+<span class="guimenu">SPACE</span>
+      adding the following lines for XML and DocBook file types:
+     </p><pre class="screen">autocmd FileType xml,docbk imap &lt;C-@&gt; &lt;C-X&gt;&lt;C-O&gt;</pre><p>
+      Then restart Vim and enjoy your wild editing experience :-)
+     </p></div></li></ol></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s03.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ar01s05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">xml.vim Plugin </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Auto-completing XML Entities</td></tr></table></div></body></html>

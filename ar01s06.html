@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>On-the-fly Spell-Checking</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><style type="text/css">
+body { background-image: url('static/images/draft.png');
+       background-repeat: no-repeat;
+       background-position: top left;
+       /* The following properties make the watermark "fixed" on the page. */
+       /* I think that's just a bit too distracting for the reader... */
+       /* background-attachment: fixed; */
+       /* background-position: center center; */
+     }</style><link rel="home" href="index.html" title="Editing XML/DocBook Files with Vim" /><link rel="up" href="index.html" title="Editing XML/DocBook Files with Vim" /><link rel="prev" href="ar01s05.html" title="Auto-completing XML Entities" /><link rel="next" href="ar01s07.html" title="DocBook Snippet Macros" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">On-the-fly Spell-Checking</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s05.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s07.html">Next</a></td></tr></table><hr /></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id1334"></a>On-the-fly Spell-Checking</h2></div></div></div><p>
+   Vim has a built-in spell checker since version 7. To activate it on the
+   current file, enter
+  </p><pre class="screen">:set spell spelllang=en</pre><p>
+   on the Vim command line, or put it in your <code class="filename">.vimrc</code>
+   file:
+  </p><pre class="screen">autocmd FileType xml,docbk set spell spelllang=en</pre><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="id1326"></a>Highlight Content, Not the Markup</h3></div></div></div><p>
+    The problem is that it highlights misspelled words included in XML tags
+    instead of their content. To make Vim highlight spelling errors in the
+    text, enter
+   </p><pre class="screen">:syntax spell toplevel</pre><p>
+    To make <span class="command"><strong>:syntax spell toplevel</strong></span> start automatically at
+    Vim start, create the <code class="filename">~/.vim/after/syntax/xml.vim</code>
+    file and add the following line:
+   </p><pre class="screen">syntax spell toplevel</pre></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="id1327"></a>Highlighting Style and Colors</h3></div></div></div><p>
+    By default, Vim uses the whole cursor block to mark misspelled words.
+    To make it underline them only, and color them with red, enter
+   </p><pre class="screen">:highlight SpellBad cterm=underline ctermfg=red ctermbg=none</pre></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="id1328"></a>Import Foreign Vocabulary</h3></div></div></div><p>
+    Vim uses its own language related spell checker dictionary. This
+    section helps you use your own custom dictionary (originally an Aspell
+    format) and turn it into Vim spelling wordlist.
+   </p><div class="procedure"><ol class="procedure" type="1"><li class="step"><p>
+      Get a custom list of words, each word on a separate line. For Aspell
+      dictionary <code class="filename">suse_aspell.rws</code> residing in the
+      <code class="filename">/usr/share/daps/lib</code> directory, use the following
+      command:
+     </p><pre class="screen">aspell dump master -l suse_aspell.rws --dict-dir=/usr/share/daps/lib &gt; ~/.vim/spell/suse.utf-8.add</pre><p>
+      The wordlist will be saved to
+      <code class="filename">.vim/spell/suse.utf-8.add</code> in your home directory.
+     </p></li><li class="step"><p>
+      Convert the new wordlist into the Vim compatible format.
+     </p><pre class="screen">:mkspell! ~/.vim/spell/suse.utf-8.add</pre></li><li class="step"><p>
+      Specify the new dictionary for use with Vim.
+     </p><pre class="screen">:set spellfile=~/.vim/spell/suse.utf-8.add</pre></li></ol></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s05.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ar01s07.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Auto-completing XML Entities </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> DocBook Snippet Macros</td></tr></table></div></body></html>
