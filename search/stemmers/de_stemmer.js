@@ -1,0 +1,1 @@
+../../../docs/search/stemmers/de_stemmer.js

@@ -1,5 +1,0 @@
-* more general info on folding, such as zO opens all folds
-* spelling howto, exclude xml tags from spelling, importing aspell wordlist
-* set formatting/indenting like theis:
-  set equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
-* auto-complete entities

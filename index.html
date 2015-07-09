@@ -1,41 +1,138 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Editing XML/DocBook Files with Vim</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><style type="text/css">
-body { background-image: url('static/images/draft.png');
-       background-repeat: no-repeat;
-       background-position: top left;
-       /* The following properties make the watermark "fixed" on the page. */
-       /* I think that's just a bit too distracting for the reader... */
-       /* background-attachment: fixed; */
-       /* background-position: center center; */
-     }</style><link rel="home" href="index.html" title="Editing XML/DocBook Files with Vim" /><link rel="next" href="ar01s02.html" title="Moving Around the Tags" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Editing XML/DocBook Files with Vim</th></tr><tr><td width="20%" align="left"> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s02.html">Next</a></td></tr></table><hr /></div><div xml:lang="en" class="article" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="art.xmlvim"></a>Editing XML/DocBook Files with Vim</h2></div><div><div class="legalnotice"><a id="id1318"></a><p>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+<title>Editing XML/DocBook Files with Vim - </title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"></meta><link rel="home" href="index.html" title="Editing XML/DocBook Files with Vim"></link><link rel="next" href="ar01s01.html" title="Useful Vim Settings"></link><meta name="Section-title" content="Editing XML/DocBook Files with Vim"></meta><script type="text/javascript">
+            //The id for tree cookie
+            var treeCookieId = "treeview-943";
+            var language = "en";
+            var w = new Object();
+            //Localization
+            txt_filesfound = 'Results';
+            txt_enter_at_least_1_char = "You must enter at least one character.";
+            txt_browser_not_supported = "JavaScript is disabled on your browser. Please enable JavaScript to enjoy all the features of this site.";
+            txt_please_wait = "Please wait. Search in progress...";
+            txt_results_for = "Results for: ";
+        </script><link rel="shortcut icon" href="favicon.ico" type="image/x-icon"></link><link rel="stylesheet" type="text/css" href="common/css/positioning.css"></link><link rel="stylesheet" type="text/css" href="common/jquery/theme-redmond/jquery-ui-1.8.2.custom.css"></link><link rel="stylesheet" type="text/css" href="common/jquery/treeview/jquery.treeview.css"></link><style type="text/css">
+
+#noscript{
+    font-weight:bold;
+	background-color: #55AA55;
+    font-weight: bold;
+    height: 25spx;
+    z-index: 3000;
+	top:0px;
+	width:100%;
+	position: relative;
+	border-bottom: solid 5px black;
+	text-align:center;
+	color: white;
+}
+
+input {
+    margin-bottom: 5px;
+    margin-top: 2px;
+}
+.folder {
+    display: block;
+    height: 22px;
+    padding-left: 20px;
+    background: transparent url(common/jquery/treeview/images/folder.gif) 0 0px no-repeat;
+}
+span.contentsTab {
+    padding-left: 20px;
+    background: url(common/images/toc-icon.png) no-repeat 0 center;
+}
+span.searchTab {
+    padding-left: 20px;
+    background: url(common/images/search-icon.png) no-repeat 0 center;
+}
+
+/* Overide jquery treeview's defaults for ul. */
+.treeview ul {
+    background-color: transparent;
+    margin-top: 4px;
+}		
+#webhelp-currentid {
+    background-color: #D8D8D8 !important;
+}
+.treeview .hover { color: black; }
+.filetree li span a { text-decoration: none; font-size: 12px; color: #517291; }
+
+/* Override jquery-ui's default css customizations. These are supposed to take precedence over those.*/
+.ui-widget-content {
+    border: 0px; 
+    background: none; 
+    color: none;     
+}
+.ui-widget-header {
+    color: #e9e8e9;
+    border-left: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+    border-bottom: 1px solid #bbc4c5;
+    border-top: 4px solid #e5e5e5;
+    border: medium none;
+    background: #F4F4F4; /* old browsers */
+    background: -moz-linear-gradient(top, #F4F4F4 0%, #E6E4E5 100%); /* firefox */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#F4F4F4), color-stop(100%,#E6E4E5)); /* webkit */    
+    font-weight: none;
+}
+.ui-widget-header a { color: none; }
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { 
+border: none; background: none; font-weight: none; color: none; }
+.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: black; text-decoration: none; }
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: none; background: none; font-weight: none; color: none; }
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { border: none; background: none; font-weight: none; color: none; }
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { 
+    color: black; text-decoration: none; 	
+    background: #C6C6C6; /* old browsers */
+    background: -moz-linear-gradient(top, #C6C6C6 0%, #D8D8D8 100%); /* firefox */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#C6C6C6), color-stop(100%,#D8D8D8)); /* webkit */
+    -webkit-border-radius:15px; -moz-border-radius:10px;
+    border: 1px solid #f1f1f1;
+}    
+.ui-corner-all { border-radius: 0 0 0 0; }
+
+.ui-tabs { padding: .2em;}
+.ui-tabs .ui-tabs-nav li { top: 0px; margin: -2px 0 1px; text-transform: uppercase; font-size: 10.5px;}
+.ui-tabs .ui-tabs-nav li a { padding: .25em 2em .25em 1em; margin: .5em; text-shadow: 0 1px 0 rgba(255,255,255,.5); }
+       /**
+	 *	Basic Layout Theme
+	 * 
+	 *	This theme uses the default layout class-names for all classes
+	 *	Add any 'custom class-names', from options: paneClass, resizerClass, togglerClass
+	 */
+
+	.ui-layout-pane { /* all 'panes' */ 
+		background: #FFF; 
+		border: 1px solid #BBB; 
+		padding: 05x; 
+		overflow: auto;
+	} 
+        
+	.ui-layout-resizer { /* all 'resizer-bars' */ 
+		background: #DDD; 
+                top:100px
+	} 
+
+	.ui-layout-toggler { /* all 'toggler-buttons' */ 
+		background: #AAA; 
+	} 
+    
+       </style><!--[if IE]>
+	<link rel="stylesheet" type="text/css" href="../common/css/ie.css"/>
+	<![endif]--><script type="text/javascript" src="common/browserDetect.js"></script><script type="text/javascript" src="common/jquery/jquery-1.7.2.min.js"></script><script type="text/javascript" src="common/jquery/jquery.ui.all.js"></script><script type="text/javascript" src="common/jquery/jquery.cookie.js"></script><script type="text/javascript" src="common/jquery/treeview/jquery.treeview.min.js"></script><script type="text/javascript" src="common/jquery/layout/jquery.layout.js"></script><script type="text/javascript" src="search/l10n.js"></script><script type="text/javascript" src="search/htmlFileInfoList.js"></script><script type="text/javascript" src="search/nwSearchFnt.js"></script><script type="text/javascript" src="search/stemmers/en_stemmer.js"><!--//make this scalable to other languages as well.--></script><script type="text/javascript" src="search/index-1.js"></script><script type="text/javascript" src="search/index-2.js"></script><script type="text/javascript" src="search/index-3.js"></script></head><body><noscript><div id="noscript">JavaScript is disabled on your browser. Please enable JavaScript to enjoy all the features of this site.</div></noscript><div id="header"><a href="index.html"><img style="margin-right: 2px; height: 59px; padding-right: 25px; padding-top: 8px" align="right" src="common/images/logo.png" alt=" Documentation"></img></a><h1>Editing XML/DocBook Files with Vim<br></br> </h1><div id="navheader"><table class="navLinks"><tr><td><a id="showHideButton" href="#" onclick="myLayout.toggle('west')" class="pointLeft" tabindex="5" title="Hide TOC tree">Sidebar
+                            </a></td><td> 
+                                    |
+                                    <a accesskey="n" class="navLinkNext" tabindex="5" href="ar01s01.html">Next</a></td></tr></table></div></div><div id="content"><div xml:lang="en" class="article"><div xmlns="" class="titlepage">
+<div>
+<div><h2 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="art.xmlvim"></a>Editing XML/DocBook Files with Vim</h2></div>
+<div><div xmlns="http://www.w3.org/1999/xhtml" class="legalnotice"><a id="id1318"></a><p>
     <a class="ulink" href="http://www.gnu.org/licenses/fdl-1.3-standalone.html" target="_top">GNU
     Free Documentation License</a>
-   </p></div></div></div><hr /></div><div class="toc"><p><strong>Table of Contents</strong></p><dl class="toc"><dt><span class="sect1"><a href="index.html#id1319">Useful Vim Settings</a></span></dt><dt><span class="sect1"><a href="ar01s02.html">Moving Around the Tags</a></span></dt><dd><dl><dt><span class="sect2"><a href="ar01s02.html#id1320">Text Objects</a></span></dt></dl></dd><dt><span class="sect1"><a href="ar01s03.html">xml.vim Plugin</a></span></dt><dd><dl><dt><span class="sect2"><a href="ar01s03.html#id1321">Installation</a></span></dt><dt><span class="sect2"><a href="ar01s03.html#id1325">Added Value</a></span></dt></dl></dd><dt><span class="sect1"><a href="ar01s04.html">DTD Support</a></span></dt><dt><span class="sect1"><a href="ar01s05.html">Auto-completing XML Entities</a></span></dt><dt><span class="sect1"><a href="ar01s06.html">On-the-fly Spell-Checking</a></span></dt><dd><dl><dt><span class="sect2"><a href="ar01s06.html#id1326">Highlight Content, Not the Markup</a></span></dt><dt><span class="sect2"><a href="ar01s06.html#id1327">Highlighting Style and Colors</a></span></dt><dt><span class="sect2"><a href="ar01s06.html#id1328">Import Foreign Vocabulary</a></span></dt></dl></dd><dt><span class="sect1"><a href="ar01s07.html">DocBook Snippet Macros</a></span></dt></dl></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id1319"></a>Useful Vim Settings</h2></div></div></div><p>
-   Vim stores its settings in <code class="filename">~/.vimrc</code>. Here are the
-   ones that I generally find useful. Note that lines starting with
-   <code class="literal">"</code> are comments.
-  </p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Tip</h3><p>
-    After you make changes to <code class="filename">.vimrc</code>, you can apply
-    them without restarting the Vim session with <span class="command"><strong>:source
-    ~/.vimrc</strong></span>
-   </p></div><pre class="screen">" break compatibility with the ancient vi
-set nocompatible
-" set autorecognition of file types
-filetype on
-filetype plugin on
-filetype indent on
-" syntax highlighting, of course
-syntax on
-" smart context sensitive indenting
-set smartindent
-" show the info status bar at the bottom
-set ruler
-" show line numbers
-set number</pre><p>
-   Turn on default capabilities for XML and DocBook file types.
-  </p><pre class="screen">autocmd FileType xml,docbk set omnifunc=xmlcomplete#CompleteTags</pre><p>
-   If you use tabs to edit several files at once, it is handy to map the the
-   following shortcuts to switch between them.
-  </p><pre class="screen">" switch the tabs with SHIFT + &lt; or &gt;
-map &lt;S-Right&gt; :tabnext&lt;CR&gt;
-map &lt;S-Left&gt; :tabprevious&lt;CR&gt;</pre></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ar01s02.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"> </td><td width="40%" align="right" valign="top"> Moving Around the Tags</td></tr></table></div></body></html>
+   </p></div></div>
+</div>
+<hr>
+</div>
+<div class="toc"><p><strong>Table of Contents</strong></p><dl class="toc"><dt><span class="sect1"><a href="ar01s01.html">Useful Vim Settings</a></span></dt><dt><span class="sect1"><a href="ar01s02.html">Moving Around the Tags</a></span></dt><dd><dl><dt><span class="sect2"><a href="ar01s02s01.html">Text Objects</a></span></dt></dl></dd><dt><span class="sect1"><a href="ar01s03.html">xml.vim Plugin</a></span></dt><dd><dl><dt><span class="sect2"><a href="ar01s03s01.html">Installation</a></span></dt><dt><span class="sect2"><a href="ar01s03s02.html">Added Value</a></span></dt></dl></dd><dt><span class="sect1"><a href="ar01s04.html">DTD Support</a></span></dt><dt><span class="sect1"><a href="ar01s05.html">Auto-completing XML Entities</a></span></dt><dt><span class="sect1"><a href="ar01s06.html">On-the-fly Spell-Checking</a></span></dt><dd><dl><dt><span class="sect2"><a href="ar01s06s01.html">Highlight Content, Not the Markup</a></span></dt><dt><span class="sect2"><a href="ar01s06s02.html">Highlighting Style and Colors</a></span></dt><dt><span class="sect2"><a href="ar01s06s03.html">Import Foreign Vocabulary</a></span></dt></dl></dd><dt><span class="sect1"><a href="ar01s07.html">DocBook Markup Macros</a></span></dt></dl></div></div><script type="text/javascript" src="common/main.js"></script><script type="text/javascript" src="common/splitterInit.js"></script><div class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ar01s01.html">Next</a></td></tr></table></div></div><div id="sidebar"><div id="leftnavigation" style="padding-top:3px;"><div id="tabs"><ul><li><a href="#treeDiv" style="outline:0;" tabindex="1"><span class="contentsTab">Contents</span></a></li><li><a href="#searchDiv" style="outline:0;" tabindex="1" onclick="doSearch()"><span class="searchTab">Search</span></a></li></ul><div id="treeDiv"><img src="common/images/loading.gif" alt="loading table of contents..." id="tocLoading" style="display:block;"></img><div id="ulTreeDiv" style="display:none"><ul id="tree" class="filetree"><li><span class="file"><a href="ar01s01.html" tabindex="1">Useful Vim Settings</a></span></li><li><span class="file"><a href="ar01s02.html" tabindex="1">Moving Around the Tags</a></span><ul><li><span class="file"><a href="ar01s02s01.html" tabindex="1">Text Objects</a></span></li></ul></li><li><span class="file"><a href="ar01s03.html" tabindex="1">xml.vim Plugin</a></span><ul><li><span class="file"><a href="ar01s03s01.html" tabindex="1">Installation</a></span></li><li><span class="file"><a href="ar01s03s02.html" tabindex="1">Added Value</a></span><ul><li><span class="file"><a href="ar01s03s02s01.html" tabindex="1">Enhancements for the Insert Mode</a></span></li><li><span class="file"><a href="ar01s03s02s02.html" tabindex="1">'[' and ']' Mappings for the Command Mode</a></span></li><li><span class="file"><a href="ar01s03s02s03.html" tabindex="1">Advanced Editing Techniques</a></span></li></ul></li></ul></li><li><span class="file"><a href="ar01s04.html" tabindex="1">DTD Support</a></span></li><li><span class="file"><a href="ar01s05.html" tabindex="1">Auto-completing XML Entities</a></span></li><li><span class="file"><a href="ar01s06.html" tabindex="1">On-the-fly Spell-Checking</a></span><ul><li><span class="file"><a href="ar01s06s01.html" tabindex="1">Highlight Content, Not the Markup</a></span></li><li><span class="file"><a href="ar01s06s02.html" tabindex="1">Highlighting Style and Colors</a></span></li><li><span class="file"><a href="ar01s06s03.html" tabindex="1">Import Foreign Vocabulary</a></span></li></ul></li><li><span class="file"><a href="ar01s07.html" tabindex="1">DocBook Markup Macros</a></span></li></ul></div></div><div id="searchDiv"><div id="search"><form onsubmit="Verifie(searchForm);return false" name="searchForm" class="searchForm"><div><input id="textToSearch" name="textToSearch" type="search" placeholder="Search" class="searchText" tabindex="1"></input> &nbsp; <input onclick="Verifie(searchForm)" type="button" class="searchButton" value="Go" id="doSearch" tabindex="1"></input></div></form></div><div id="searchResults"><center></center></div><p class="searchHighlight"><a href="#" onclick="toggleHighlight()">Search Highlighter (On/Off)</a></p></div></div></div></div></body></html>

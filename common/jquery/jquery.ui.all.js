@@ -1,0 +1,1 @@
+../../../docs/common/jquery/jquery.ui.all.js
