@@ -34,5 +34,5 @@ fil["11"]= "ar01s06.html@@@On-the-fly Spell-Checking@@@null";
 fil["12"]= "ar01s03s01.html@@@Installation@@@null";
 fil["13"]= "ar01s03s02s01.html@@@Enhancements for the Insert Mode@@@null";
 fil["14"]= "ar01s06s01.html@@@Highlight Content, Not the Markup@@@null";
-fil["15"]= "ar01s07.html@@@DocBook Markup Macros@@@null";
+fil["15"]= "ar01s07.html@@@DocBook Snippet Macros@@@null";
 fil["16"]= "ar01s02s01.html@@@Text Objects@@@null";
